@@ -38,13 +38,13 @@ app.post('/api/auth/signin', async (req, res) => {
 	try {
 		const user = await User.findOne({ email });
 		if (!user) {
-			return res.status(401).json({ error: 'User not found' });
+			return res.status(401).json({ error: 'Unauthorized' });
 		}
 
 		// Compare hashed password
 		const isMatch = await bcrypt.compare(password, user.password);
 		if (!isMatch) {
-			return res.status(401).json({ error: 'Invalid password' });
+			return res.status(401).json({ error: 'Unauthorized' });
 		}
 
 		// Return user (use carefully in production – exclude password)
